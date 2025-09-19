@@ -1,17 +1,29 @@
-# 💬 EDP Chatbot
+# EDP Chatbot  
 
-The **EDP Chatbot** is a web-based assistant built with **React (frontend)** and **Flask (backend)** to help the EDP Department provide quick responses to queries.  
-It uses a dataset (`datasets.jsonl`) for matching questions and restricts sensitive queries for security.
+A chatbot designed for the **EDP Department** to assist with FAQs and basic queries.  
 
----
-
-## 🚀 Features
-- ✅ Modern chat interface built with React  
-- ✅ Flask backend API with dataset matching  
-- ✅ Restricted keywords filter for sensitive data  
-- ✅ Smooth UI with gradient animations  
-- ✅ Ready for deployment on **Vercel (frontend)** and **Render/Railway (backend)**  
+⚠️ **Note:**  
+This chatbot is for **internship purposes only** and is **not deployed for public use**.  
 
 ---
 
-## 📂 Project Structure
+## Features  
+- Answer EDP-related questions from a dataset  
+- Restricted keyword filtering for sensitive queries  
+- Simple UI built with React  
+- Backend powered by Flask  
+
+---
+
+## Tech Stack  
+- **Frontend:** React  
+- **Backend:** Flask (Python)  
+- **Dataset:** JSONL format  
+- **Deployment (planned):** Vercel (frontend)  
+
+---
+
+## Developer  
+👨‍💻 **Ivan June F. Trapero**  
+- Role: Intern Developer  
+- Focus: Building chatbot features, UI/UX, and dataset integration  
