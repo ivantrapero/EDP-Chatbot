@@ -28,5 +28,5 @@ This chatbot is for **internship purposes only** and is **not deployed for publi
 
 ## Developer  
 👨‍💻 **Ivan June F. Trapero**  
-- Role: **Software/Chatbot Developer Intern**  
+- Role: **Machine Learning Developer**  
 - Focus: Developing chatbot features, integrating ChatGPT and Pinecone, UI/UX design, and dataset management  
