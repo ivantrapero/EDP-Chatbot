@@ -10,6 +10,8 @@ This chatbot is for **internship purposes only** and is **not deployed for publi
 ## Features  
 - Answer EDP-related questions from a dataset  
 - Restricted keyword filtering for sensitive queries  
+- Uses **ChatGPT** for intelligent responses  
+- Uses **Pinecone** for vector-based knowledge retrieval  
 - Simple UI built with React  
 - Backend powered by Flask  
 
@@ -18,6 +20,7 @@ This chatbot is for **internship purposes only** and is **not deployed for publi
 ## Tech Stack  
 - **Frontend:** React  
 - **Backend:** Flask (Python)  
+- **AI & Search:** OpenAI ChatGPT, Pinecone  
 - **Dataset:** JSONL format  
 - **Deployment (planned):** Vercel (frontend)  
 
@@ -25,5 +28,5 @@ This chatbot is for **internship purposes only** and is **not deployed for publi
 
 ## Developer  
 👨‍💻 **Ivan June F. Trapero**  
-- Role: Intern Developer  
-- Focus: Building chatbot features, UI/UX, and dataset integration  
+- Role: **Software/Chatbot Developer Intern**  
+- Focus: Developing chatbot features, integrating ChatGPT and Pinecone, UI/UX design, and dataset management  
