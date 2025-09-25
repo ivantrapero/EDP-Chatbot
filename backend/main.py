@@ -8,6 +8,9 @@ import random
 import csv
 from datetime import datetime
 from openai import OpenAI
+from dotenv import load_dotenv
+
+load_dotenv()
 
 app = Flask(__name__)
 CORS(app)
@@ -123,8 +126,13 @@ def chat():
     # Always get AI response
     ai_response = get_openai_response(user_message)
 
-    # Default AI choices
-    ai_choices = ["Okay", "Thanks", "Tell me more"]
+    # Extract questions from dataset for choices
+    dataset_questions = [
+    conv["messages"][-2]["content"]
+    for conv in dataset if len(conv["messages"]) >= 2
+]
+    # Limit the number of questions shown (e.g., 3 random ones)
+    ai_choices = random.sample(dataset_questions, min(6, len(dataset_questions)))
 
     # Merge dataset + AI choices
     final_choices = list(set(dataset_choices + ai_choices))
