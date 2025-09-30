@@ -1,5 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
+import { db } from "./firebase";
+import { doc, getDoc, updateDoc } from "firebase/firestore";
 import "./App.css";
 
 function ChatPage() {
@@ -7,16 +9,14 @@ function ChatPage() {
   const [input, setInput] = useState("");
   const [choices, setChoices] = useState([]);
   const [expandedMessages, setExpandedMessages] = useState({});
+  const [promptsUsed, setPromptsUsed] = useState(0);
 
-  // Ref for auto-scrolling
   const chatEndRef = useRef(null);
 
-  // Scroll to bottom whenever messages change
   useEffect(() => {
     chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
 
-  // Fetch welcome message
   useEffect(() => {
     const fetchWelcome = async () => {
       try {
@@ -33,24 +33,52 @@ function ChatPage() {
   const handleSend = async (message = input) => {
     if (!message.trim()) return;
 
+    const userId = localStorage.getItem("userId");
+    if (!userId) {
+      alert("You must log in first.");
+      return;
+    }
+
+    try {
+      const userRef = doc(db, "users", userId);
+      const userSnap = await getDoc(userRef);
+
+      if (userSnap.exists()) {
+        const userData = userSnap.data();
+
+        if (userData.promptsUsed >= 5) {
+          setMessages([...messages, { text: "⚠️ You have reached your daily 5-prompt limit.", sender: "bot" }]);
+          return;
+        }
+
+        await updateDoc(userRef, {
+          promptsUsed: userData.promptsUsed + 1,
+        });
+
+        setPromptsUsed(userData.promptsUsed + 1);
+      }
+    } catch (err) {
+      console.error("Error checking prompt limit:", err);
+      return;
+    }
+
     const newMessages = [...messages, { text: message, sender: "user" }];
     setMessages(newMessages);
     setInput("");
     setChoices([]);
 
     try {
-      // Send message to backend
       const res = await axios.post("http://127.0.0.1:5000/chat", { message });
       setMessages([...newMessages, { text: res.data.response, sender: "bot" }]);
       if (res.data.choices?.length > 0) setChoices(res.data.choices);
     } catch (error) {
       console.error("Error connecting to backend:", error);
-      setMessages([...newMessages, { text: "Unable to reach AskBot. Try again later.", sender: "bot" }]);
+      setMessages([...newMessages, { text: "Unable to reach BagutBOT. Try again later.", sender: "bot" }]);
     }
   };
 
   const toggleExpand = (index) => {
-    setExpandedMessages(prev => ({ ...prev, [index]: !prev[index] }));
+    setExpandedMessages((prev) => ({ ...prev, [index]: !prev[index] }));
   };
 
   const renderBotMessage = (msg, index) => {
@@ -61,26 +89,30 @@ function ChatPage() {
       return (
         <div onClick={() => toggleExpand(index)} style={{ cursor: "pointer" }}>
           {msg.text.substring(0, maxLength)}...
-          <span style={{ fontStyle: "italic", fontSize: "0.8rem" }}> (click to expand)</span>
+          <span style={{ fontStyle: "italic", fontSize: "0.8rem" }}>
+            {" "} (click to expand)
+          </span>
         </div>
       );
     }
 
-    const lines = msg.text.split(/\n/).map(line => line.trim()).filter(Boolean);
-
-    return lines.map((line, i) => {
-      if (/^\d+\./.test(line)) {
-        return <li key={i}>{line.replace(/^\d+\.\s*/, "")}</li>;
-      }
-      return <div key={i}>{line}</div>;
-    });
+    const lines = msg.text.split(/\n/).map((line) => line.trim()).filter(Boolean);
+    return lines.map((line, i) =>
+      /^\d+\./.test(line) ? (
+        <li key={i}>{line.replace(/^\d+\.\s*/, "")}</li>
+      ) : (
+        <div key={i}>{line}</div>
+      )
+    );
   };
 
   return (
     <div className="chatpage-container">
-      <div className="chatpage-title"><h2>ASKBOT</h2></div>
+      <div className="chatpage-title">
+        <h2>BagutBOT</h2>
+        <p>Prompts Used: {promptsUsed}/5</p>
+      </div>
 
-      {/* Chat messages */}
       <div className="chatbox">
         {messages.map((msg, index) => (
           <div key={index} className={`message ${msg.sender === "user" ? "user" : "bot"}`}>
@@ -93,11 +125,9 @@ function ChatPage() {
             )}
           </div>
         ))}
-        {/* Dummy div for auto-scrolling */}
         <div ref={chatEndRef} />
       </div>
 
-      {/* Suggested choices */}
       {choices.length > 0 && (
         <div className="choices-container">
           {choices.map((choice, index) => (
@@ -108,7 +138,6 @@ function ChatPage() {
         </div>
       )}
 
-      {/* Input area */}
       <div className="input-container">
         <input
           type="text"
@@ -118,7 +147,9 @@ function ChatPage() {
           onChange={(e) => setInput(e.target.value)}
           onKeyDown={(e) => e.key === "Enter" && handleSend()}
         />
-        <button className="send-button" onClick={() => handleSend()}>Send</button>
+        <button className="send-button" onClick={() => handleSend()}>
+          Send
+        </button>
       </div>
     </div>
   );
