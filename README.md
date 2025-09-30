@@ -1,4 +1,4 @@
-# *ASKBOT*
+# *BagutBOT*
 
 A chatbot designed for the **EDP Department** to assist with FAQs and basic queries.  
 
