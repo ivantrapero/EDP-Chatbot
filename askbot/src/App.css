@@ -694,6 +694,7 @@ body {
   width: 300px;
   max-width: 90%;
   z-index: 1001;
+  margin-left: 30px;
 }
 
 .register-card h3 {
