@@ -723,16 +723,21 @@ body {
   to { transform: scale(1); opacity: 1; }
 }
 
-/* 📱 Mobile Devices (up to 600px width) */
+/* Mobile Devices (up to 600px width) */
 @media (max-width: 600px) {
   .login-container {
-    margin-left: 0;
+    margin-left: 100px;
     padding: 20px;
   }
 
   .login-card {
     max-width: 90%;
     padding: 25px 20px;
+  }
+
+  .register-card{
+    margin-left: 35px;
+    margin-top: 50px;
   }
 
   .main-title {
@@ -780,7 +785,7 @@ body {
   }
 }
 
-/* 💻 Tablets (601px - 1024px width) */
+/* Tablets (601px - 1024px width) */
 @media (min-width: 601px) and (max-width: 1024px) {
   .login-container {
     margin-left: 10%;
@@ -804,7 +809,7 @@ body {
   }
 }
 
-/* 🖥️ Large screens (above 1024px width) */
+/* Large screens (above 1024px width) */
 @media (min-width: 1025px) {
   .login-container {
     margin-left: 40%;
