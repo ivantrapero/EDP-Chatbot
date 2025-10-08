@@ -722,3 +722,103 @@ body {
   from { transform: scale(0.7); opacity: 0; }
   to { transform: scale(1); opacity: 1; }
 }
+
+/* 📱 Mobile Devices (up to 600px width) */
+@media (max-width: 600px) {
+  .login-container {
+    margin-left: 0;
+    padding: 20px;
+  }
+
+  .login-card {
+    max-width: 90%;
+    padding: 25px 20px;
+  }
+
+  .main-title {
+    font-size: 4rem;
+  }
+
+  .start-chat-btn {
+    font-size: 14px;
+    padding: 10px 20px;
+    margin-top: 25%;
+  }
+
+  .chatpage-title h2 {
+    margin-left: 0;
+    justify-content: center;
+    font-size: 1.5rem;
+    text-align: center;
+  }
+
+  .chatpage-title p {
+    margin-left: 0;
+    text-align: center;
+  }
+
+  .chatbox {
+    padding: 10px;
+  }
+
+  .message {
+    max-width: 85%;
+    font-size: 14px;
+  }
+
+  .input-container {
+    flex-direction: column;
+  }
+
+  .send-button {
+    width: 100%;
+  }
+
+  .profile-card {
+    width: 90%;
+    height: auto;
+  }
+}
+
+/* 💻 Tablets (601px - 1024px width) */
+@media (min-width: 601px) and (max-width: 1024px) {
+  .login-container {
+    margin-left: 10%;
+  }
+
+  .login-card {
+    max-width: 80%;
+  }
+
+  .main-title {
+    font-size: 6rem;
+  }
+
+  .chatpage-title h2 {
+    margin-left: 0;
+    text-align: center;
+  }
+
+  .profile-card {
+    width: 70%;
+  }
+}
+
+/* 🖥️ Large screens (above 1024px width) */
+@media (min-width: 1025px) {
+  .login-container {
+    margin-left: 40%;
+  }
+
+  .main-title {
+    font-size: 10rem;
+  }
+
+  .chatpage-title h2 {
+    margin-left: 45%;
+  }
+
+  .profile-card {
+    width: 320px;
+  }
+}
